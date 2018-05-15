@@ -4,16 +4,26 @@ include('createKey.php');
 include('encrypt.php');
 include('decrypt.php');
 
-$keys = new CreateKey();
-$check = $keys->index();
+if (isset($_GET['password'])) {
+	$password = preg_replace('/\s+/', '+', $_GET['password']);
+	echo $password;
+	$decrypt = new Decrypt();
+	$decrypt = $decrypt->index($password);
 
-$encrypt = new Encrypt();
-$encrypt = $encrypt->index('This is demo');
+	echo "<br>";
+	echo "Decrypt: $decrypt";
+} else {
+	//$keys = new CreateKey();
+	//$check = $keys->index();
 
-echo "Encrypt: $encrypt";
+	$encrypt = new Encrypt();
+	$encrypt = $encrypt->index('This is a test');
 
-$decrypt = new Decrypt();
-$decrypt = $decrypt->index($encrypt);
+	echo "Encrypt: $encrypt";
 
-echo "<br>";
-echo "Decrypt: $decrypt";
+	$decrypt = new Decrypt();
+	$decrypt = $decrypt->index($encrypt);
+
+	echo "<br>";
+	echo "Decrypt: $decrypt";
+}
